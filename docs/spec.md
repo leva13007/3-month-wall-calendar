@@ -43,5 +43,131 @@ so I know what is coming in the next 3 months.
   then the red frame moves to 13 Nov and 12 Nov becomes dimmed, without a reload.
 - Given the app is open and the view starts at the current month (November),
   when the date changes to 1 Dec, then the view shifts to December, January, February.
-- Assumption (to confirm in F2): if I navigated to other months, the view does not
-  jump at midnight; only the frame and dimming update.
+- Given I navigated to other months (e.g. March – May), when the date changes,
+  then the view does not jump; only the red frame and dimming update.
+
+## F2 — Navigation
+
+### US-2.1 Previous / next month
+As the owner, I move the view one month at a time,
+so that I can look further ahead or back like turning a page.
+- Given the view shows Nov 2026 – Jan 2027, when I press "next",
+  then it shows Dec 2026 – Feb 2027.
+- Given the view shows Nov 2026 – Jan 2027, when I press "previous",
+  then it shows Oct 2026 – Dec 2026.
+- There is no limit in either direction.
+- The months are replaced instantly (no animation in v1).
+
+### US-2.2 Today button
+As the owner, I return to the current view with one click.
+- Given the view shows Mar – May 2027 and today is 14 Nov 2026,
+  when I press "Today", then it shows Nov 2026 – Jan 2027.
+- Given the view already starts at the current month,
+  then the "Today" button is visible but disabled.
+
+### US-2.3 Input method
+- Navigation works with on-screen buttons only. No keyboard shortcuts in v1.
+
+## F3 — Events
+
+An event has a **title** (required) and a **description** (optional).
+"Editable day" = today or a future day. "Past day" = before today; it is read-only.
+
+### US-3.1 Open a day
+- Given an editable day with events, when I click it,
+  then the day modal shows the list of events and an "Add event" button.
+- Given an editable day with no events, when I click it,
+  then the add form opens directly.
+- Given a past day with events, when I click it,
+  then the modal shows the list, with no "Add event" button.
+- Given a past day with no events, when I click it, then nothing happens.
+- The list shows titles in the order they were added (oldest first).
+
+### US-3.2 Add an event
+- Given the add form on 20 Nov 2026, when I enter a title and press Save,
+  then the event is added to 20 Nov and the cell counter increases by 1.
+- The title is 1–60 characters; a title of only spaces cannot be saved.
+- The description is optional, max 500 characters.
+- The modal has a close button; closing it discards unsaved changes.
+
+### US-3.3 View an event
+- Given the day list, when I click an event,
+  then I see its title and full description.
+- Given an editable day, the details show Edit, Delete and Clone.
+- Given a past day, the details show only Clone.
+
+### US-3.4 Edit an event
+- Given an event on an editable day, when I press Edit, change the title and press Save,
+  then the event shows the new title. The same validation as US-3.2 applies.
+
+### US-3.5 Delete an event
+- Given an event on an editable day, when I press Delete,
+  then it is removed immediately (no confirmation) and the cell counter decreases by 1.
+- Given the last event of a day is deleted, then the cell has no border and no counter.
+
+### US-3.6 Clone an event
+As the owner, I copy any event (past or future) to a new date.
+- Given an event on 5 Nov 2026, when I press Clone,
+  then the add form opens with its title and description filled in, plus a date field.
+- I can change the date, title and description before saving.
+- The date must be today or later; earlier dates cannot be picked.
+- When I press Save, then a new event is created on the chosen date;
+  the original event does not change.
+
+## F4 — Persistence
+
+Events are stored in localStorage, behind a small storage module (swappable later).
+
+### US-4.1 Events survive a reload
+- Given I added an event on 20 Nov 2026, when I reload the page or restart the PWA,
+  then the event is still there.
+- Given there is no saved data (first run), then the calendar shows no events and no error.
+
+### US-4.2 Two windows open at once
+- There is no live sync between windows in v1: a window shows changes from
+  another window only after a reload.
+- Given an event was added in another window, when I save a change in this window,
+  then the other event is not lost (it appears after a reload).
+
+### US-4.3 Save fails
+- Given saving fails (storage full or blocked), when I press Save,
+  then the modal stays open with my text and shows:
+  "Couldn't save. Your changes are not stored."
+
+## F5 — Backup
+
+### US-5.1 Export
+As the owner, I download all my events as a file, so I have a backup.
+- When I press Export, then a JSON file with all events is downloaded.
+- The file name includes the date: `wall-calendar-backup-2026-11-14.json`.
+- Given there are no events, then Export still works and the file has an empty list.
+
+### US-5.2 Import (replace)
+As the owner, I restore my events from a backup file.
+- Given I have 12 events and pick a valid file with 30 events, when I press Import,
+  then I see: "This will replace all 12 events with 30 events from the file. Continue?"
+  with Yes / Cancel (inside the app, not a browser dialog).
+- When I press Yes, then all current events are replaced by the file's events.
+- When I press Cancel, then nothing changes.
+
+### US-5.3 Invalid import file
+- Given the file is not JSON, has the wrong format, or any event breaks the rules
+  (e.g. a 70-character title), when I import it,
+  then nothing changes and a short error message is shown. No partial imports.
+
+## F6 — PWA
+
+### US-6.1 Install
+As the owner, I install the calendar as an app in Chrome,
+so it opens in its own window on the vertical monitor.
+- Given the app is open in Chrome, then Chrome offers "Install app".
+- When installed, then it opens in its own window without the address bar,
+  named "Wall Calendar", with its own icon.
+
+### US-6.2 Works offline
+- Given the app was installed once, when the local server is not running
+  (e.g. after a restart), then the app still opens and works with saved events.
+
+### US-6.3 Updates
+- Given a new version is built and served, then the app uses it on the next launch.
+- No "update available" message in v1; the old version may show once after a change.
