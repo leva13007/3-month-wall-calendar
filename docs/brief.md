@@ -6,11 +6,11 @@ Roles: Owner (single user) — keeps the calendar open full-screen on a vertical
 Goal: The app replaces the paper calendar on the vertical monitor.
 Metrics: at least 1 new event added per month, on average.
 
-In scope (v1): 3 stacked months, ISO week numbers, today highlight, several events per day, prev/next month + "Today" button (instant replace), JSON export/import, PWA install.
-Out of scope (v1): auth, multi-user, sync, recurring events, drag & drop, themes, Ukrainian holidays / professional days, smooth scrolling, clickable overflow days, pictures in a top frame.
+In scope (v1): 3 stacked months, ISO week numbers, today highlight, several events per day, clone an event to a new date, prev/next month + "Today" button (instant replace), JSON export/import, PWA install.
+Out of scope (v1): event times (start/end), auth, multi-user, sync, recurring events, drag & drop, themes, Ukrainian holidays / professional days, smooth scrolling, keyboard shortcuts, clickable overflow days, pictures in a top frame.
 
 Glossary:
-  Event — short text note on one date; all-day (no time); a day can have many.
+  Event — title (1–60 chars, required) + optional description (max 500); one date; all-day (no time); a day can have many. Past days are read-only.
   View — 3 months on screen: start month + next 2. "Today" resets the start month to the current month.
   Today — current date in the machine's local time; highlighted.
   Week number — ISO 8601 week, weeks start on Monday (e.g. 28–31 Dec 2026 = week 53).
