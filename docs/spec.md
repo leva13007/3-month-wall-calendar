@@ -10,8 +10,8 @@ As the owner, I see the current month and the next 2 stacked top to bottom,
 so I know what is coming in the next 3 months.
 - Given today is 12 Nov 2026, when I open the app,
   then I see November 2026, December 2026, January 2027, top to bottom.
-- Each month has a bilingual header with the year: "ЛИСТОПАД • NOVEMBER 2026".
-- Each month has a weekday row, Monday first: "ПН / MON" … "НД / SUN".
+- Each month has a bilingual header with the year, English first: "NOVEMBER • ЛИСТОПАД 2026".
+- Each month has a weekday row, Monday first, English first: "MON / ПН" … "SUN / НД".
 
 ### US-1.2 Month grid
 - A month shows 5 or 6 week rows, as many as it needs. No shared cells.

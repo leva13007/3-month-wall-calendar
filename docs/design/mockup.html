@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wall Calendar — mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --paper: #f6f6f7;
+    --line: #e3e3e6;
+    --ink: #1c1c1f;
+    --muted: #8a8a92;
+    --red: #d62828;
+    --pink: #ff3d8b;
+    --pink-soft: #ffe3ef;
+    --bar: #1c1c1f;
+    --bar-ink: #f4f4f5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Inter, system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ---------- top bar ---------- */
+  .bar {
+    flex: 0 0 auto;
+    height: clamp(44px, 4.2vh, 72px);
+    background: var(--bar);
+    color: var(--bar-ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(10px, 1.6vw, 24px);
+    gap: 12px;
+  }
+  .bar .group { display: flex; gap: 8px; align-items: center; }
+  .bar .title {
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-size: clamp(14px, 1.6vh, 24px);
+    opacity: .85;
+  }
+  .btn {
+    font: 600 clamp(12px, 1.25vh, 18px) Inter, sans-serif;
+    border: 1px solid rgba(255,255,255,.25);
+    background: transparent;
+    color: inherit;
+    border-radius: 8px;
+    padding: .45em .9em;
+    cursor: pointer;
+  }
+  .btn:hover:not(:disabled) { background: rgba(255,255,255,.1); }
+  .btn:disabled { opacity: .35; cursor: default; }
+  .btn.primary { background: var(--red); border-color: var(--red); }
+
+  /* ---------- months ---------- */
+  .months {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(6px, 1vh, 18px);
+    padding: clamp(6px, 1vh, 18px) clamp(8px, 1.4vw, 24px);
+  }
+  .month {
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(28px, 6%) repeat(7, 1fr);
+    background: var(--paper);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .m-head {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: .25em .6em 0;
+    font-family: "Barlow Condensed", sans-serif;
+  }
+  .m-name { font-weight: 800; font-size: clamp(18px, 2.6vh, 44px); letter-spacing: .02em; }
+  .m-name small { font-weight: 700; font-size: .5em; letter-spacing: .08em; color: var(--muted); }
+  .m-name small::before { content: "•"; color: var(--red); margin: 0 .3em; }
+  .m-year { font-weight: 800; color: var(--red); font-size: clamp(18px, 2.6vh, 44px); }
+
+  .wd, .wk-h {
+    background: #e9e9ec;
+    text-align: center;
+    padding: .25em 0;
+    font-family: "Barlow Condensed", sans-serif;
+    line-height: 1.05;
+  }
+  .wd b { display: block; font-size: clamp(12px, 1.35vh, 22px); }
+  .wd span, .wk-h span { display: block; font-size: clamp(8px, .85vh, 13px); color: var(--muted); letter-spacing: .06em; }
+  .wk-h { color: var(--muted); }
+  .wk-h b { display: block; font-size: clamp(10px, 1.1vh, 18px); }
+  .wd.weekend b { color: var(--red); }
+
+  .wk {
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 700;
+    color: #b4b4ba;
+    font-size: clamp(12px, 1.6vh, 26px);
+    border-top: 1px solid var(--line);
+  }
+
+  .day {
+    position: relative;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0 .35em .1em 0;
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 700;
+    font-size: clamp(20px, 3.6vh, 64px);
+    line-height: 1;
+    cursor: pointer;
+    background: var(--bg);
+  }
+  .day.weekend { color: var(--red); }
+  .day:hover:not(.overflow):not(.locked) { background: #fafafa; }
+
+  .day.overflow {
+    color: transparent;
+    -webkit-text-stroke: 1px #c3c3c8;
+    cursor: default;
+    background: var(--paper);
+  }
+  .day.past:not(.overflow) { opacity: .35; }
+  .day.locked { cursor: default; }
+
+  .day.has-events { box-shadow: inset 0 0 0 1.5px var(--pink); }
+  .day .count {
+    position: absolute;
+    top: .35em; left: .35em;
+    min-width: 1.6em; height: 1.6em;
+    padding: 0 .4em;
+    border-radius: 999px;
+    background: var(--pink);
+    color: #fff;
+    font: 600 clamp(10px, 1.1vh, 17px)/1.6em Inter, sans-serif;
+    text-align: center;
+    -webkit-text-stroke: 0;
+  }
+
+  .day.today { box-shadow: inset 0 0 0 4px var(--red); }
+  .day.today.has-events { box-shadow: inset 0 0 0 4px var(--red), inset 0 0 0 5.5px var(--pink); }
+
+  /* ---------- modal ---------- */
+  .backdrop {
+    position: fixed; inset: 0;
+    background: rgba(20,20,24,.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .backdrop.open { display: flex; }
+  .modal {
+    width: min(560px, 100%);
+    max-height: 80vh;
+    overflow: auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    padding: 22px 24px 20px;
+    font-size: 16px;
+  }
+  .modal header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 14px; }
+  .modal h2 { margin: 0; font: 800 30px/1.05 "Barlow Condensed", sans-serif; }
+  .modal h2 small { display: block; font: 500 14px Inter, sans-serif; color: var(--muted); margin-top: 4px; }
+  .x { border: 0; background: none; font-size: 26px; line-height: 1; cursor: pointer; color: var(--muted); }
+  .list { list-style: none; margin: 0 0 14px; padding: 0; }
+  .list li {
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--pink);
+    border-radius: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .list li:hover { background: var(--pink-soft); }
+  .note { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+  .actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  .mbtn {
+    font: 600 15px Inter, sans-serif;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 9px;
+    padding: 9px 16px;
+    cursor: pointer;
+  }
+  .mbtn.pink { background: var(--pink); border-color: var(--pink); color: #fff; }
+  .mbtn.danger { color: var(--red); }
+  .mbtn:disabled { opacity: .4; cursor: default; }
+  .mbtn.left { margin-right: auto; }
+  label { display: block; font-weight: 600; font-size: 14px; margin: 12px 0 6px; }
+  input[type=text], input[type=date], textarea {
+    width: 100%;
+    font: 400 16px Inter, sans-serif;
+    border: 1px solid #cfcfd5;
+    border-radius: 9px;
+    padding: 10px 12px;
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  .counter { text-align: right; font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .desc { white-space: pre-wrap; color: #3a3a40; line-height: 1.5; margin: 0 0 18px; }
+
+  .tag {
+    position: fixed; right: 10px; bottom: 8px;
+    font: 500 11px Inter, sans-serif; color: var(--muted);
+    background: rgba(255,255,255,.8); padding: 2px 6px; border-radius: 6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="group">
+    <button class="btn" id="prev" aria-label="Previous month">◀</button>
+    <button class="btn primary" id="today">Today</button>
+    <button class="btn" id="next" aria-label="Next month">▶</button>
+  </div>
+  <div class="title">Wall Calendar</div>
+  <div class="group">
+    <button class="btn" id="export">Export</button>
+    <button class="btn" id="import">Import</button>
+  </div>
+</div>
+
+<main class="months" id="months"></main>
+
+<div class="backdrop" id="backdrop"><div class="modal" id="modal"></div></div>
+<div class="tag">mockup · sample data</div>
+
+<script>
+  // ---- names ----
+  const UA_MONTHS = ["СІЧЕНЬ","ЛЮТИЙ","БЕРЕЗЕНЬ","КВІТЕНЬ","ТРАВЕНЬ","ЧЕРВЕНЬ","ЛИПЕНЬ","СЕРПЕНЬ","ВЕРЕСЕНЬ","ЖОВТЕНЬ","ЛИСТОПАД","ГРУДЕНЬ"];
+  const EN_MONTHS = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+  const UA_DAYS = ["ПН","ВТ","СР","ЧТ","ПТ","СБ","НД"];
+  const EN_DAYS = ["MON","TUE","WED","THU","FRI","SAT","SUN"];
+
+  // ---- dates ----
+  const pad = n => String(n).padStart(2, "0");
+  const key = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const todayKey = key(today);
+  function isoWeek(d) {
+    const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const day = t.getUTCDay() || 7;
+    t.setUTCDate(t.getUTCDate() + 4 - day);
+    const y0 = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+    return Math.ceil(((t - y0) / 86400000 + 1) / 7);
+  }
+
+  // ---- sample data (in memory only) ----
+  let nextId = 1;
+  const events = {};
+  function add(dateKey, title, description = "") {
+    (events[dateKey] ||= []).push({ id: nextId++, title, description });
+  }
+  const rel = n => key(addDays(today, n));
+  add(rel(-10), "Dentist", "Check-up at 10:30.");
+  add(rel(5), "IT Friday stream", "Topic: React state.");
+  add(rel(5), "Call with mum");
+  add(rel(10), "Bike service");
+  add(rel(40), "Christmas dinner", "Book a table this week!");
+  add(rel(40), "Gifts");
+  add(rel(53), "Visa renewal deadline");
+  add(rel(53), "Gym");
+  add(rel(53), "Pay rent");
+
+  // ---- view ----
+  let start = new Date(today.getFullYear(), today.getMonth(), 1);
+  const monthsEl = document.getElementById("months");
+
+  function render() {
+    monthsEl.innerHTML = "";
+    for (let i = 0; i < 3; i++) {
+      monthsEl.appendChild(renderMonth(new Date(start.getFullYear(), start.getMonth() + i, 1)));
+    }
+    const atHome = start.getFullYear() === today.getFullYear() && start.getMonth() === today.getMonth();
+    document.getElementById("today").disabled = atHome;
+  }
+
+  function renderMonth(first) {
+    const y = first.getFullYear(), m = first.getMonth();
+    const offset = (first.getDay() + 6) % 7;
+    const dim = new Date(y, m + 1, 0).getDate();
+    const rows = Math.ceil((offset + dim) / 7);
+    const el = document.createElement("section");
+    el.className = "month";
+    el.style.flex = `${rows + 1.6} 1 0`;
+    el.style.gridTemplateRows = `auto auto repeat(${rows}, 1fr)`;
+
+    el.insertAdjacentHTML("beforeend",
+      `<div class="m-head"><div class="m-name">${EN_MONTHS[m]}<small>${UA_MONTHS[m]}</small></div><div class="m-year">${y}</div></div>`);
+    el.insertAdjacentHTML("beforeend", `<div class="wk-h"><b>WEEK</b><span>ТИЖ</span></div>`);
+    UA_DAYS.forEach((d, i) => el.insertAdjacentHTML("beforeend",
+      `<div class="wd${i > 4 ? " weekend" : ""}"><b>${EN_DAYS[i]}</b><span>${d}</span></div>`));
+
+    let d = addDays(first, -offset);
+    for (let r = 0; r < rows; r++) {
+      el.insertAdjacentHTML("beforeend", `<div class="wk">${isoWeek(d)}</div>`);
+      for (let c = 0; c < 7; c++) {
+        el.appendChild(renderDay(d, d.getMonth() !== m, c > 4));
+        d = addDays(d, 1);
+      }
+    }
+    return el;
+  }
+
+  function renderDay(d, overflow, weekend) {
+    const k = key(d);
+    const list = events[k] || [];
+    const past = d < today;
+    const cell = document.createElement("div");
+    cell.className = "day";
+    if (weekend) cell.classList.add("weekend");
+    if (overflow) cell.classList.add("overflow");
+    if (past) cell.classList.add("past");
+    if (k === todayKey && !overflow) cell.classList.add("today");
+    if (list.length && !overflow) {
+      cell.classList.add("has-events");
+      cell.insertAdjacentHTML("beforeend", `<span class="count">${list.length}</span>`);
+    }
+    if (past && !list.length) cell.classList.add("locked");
+    cell.insertAdjacentHTML("beforeend", `<span>${d.getDate()}</span>`);
+    if (!overflow) cell.addEventListener("click", () => openDay(k, past));
+    return cell;
+  }
+
+  // ---- modal ----
+  const backdrop = document.getElementById("backdrop");
+  const modal = document.getElementById("modal");
+  const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  function heading(k) {
+    const [y, m, d] = k.split("-").map(Number);
+    const dt = new Date(y, m - 1, d);
+    const wd = (dt.getDay() + 6) % 7;
+    return `<h2>${d} ${EN_MONTHS[m - 1].slice(0, 3)} ${y}<small>${EN_DAYS[wd]} / ${UA_DAYS[wd]}${dt < today ? " · past day, read-only" : ""}</small></h2>`;
+  }
+  function show(html) {
+    modal.innerHTML = html;
+    backdrop.classList.add("open");
+    modal.querySelector(".x")?.addEventListener("click", close);
+  }
+  function close() { backdrop.classList.remove("open"); render(); }
+  backdrop.addEventListener("click", e => { if (e.target === backdrop) close(); });
+
+  function openDay(k, past) {
+    const list = events[k] || [];
+    if (!list.length) { if (!past) openForm({ dateKey: k }); return; }
+    show(`
+      <header>${heading(k)}<button class="x" aria-label="Close">×</button></header>
+      <ul class="list">${list.map(e => `<li data-id="${e.id}">${esc(e.title)}</li>`).join("")}</ul>
+      <div class="actions">${past ? "" : `<button class="mbtn pink" id="add">+ Add event</button>`}</div>`);
+    modal.querySelectorAll(".list li").forEach(li =>
+      li.addEventListener("click", () => openDetails(k, Number(li.dataset.id), past)));
+    modal.querySelector("#add")?.addEventListener("click", () => openForm({ dateKey: k }));
+  }
+
+  function openDetails(k, id, past) {
+    const ev = events[k].find(e => e.id === id);
+    show(`
+      <header>${heading(k)}<button class="x" aria-label="Close">×</button></header>
+      <h3 style="margin:0 0 8px;font-size:20px">${esc(ev.title)}</h3>
+      <p class="desc">${ev.description ? esc(ev.description) : '<span class="note">No description.</span>'}</p>
+      <div class="actions">
+        <button class="mbtn left" id="back">← Back</button>
+        ${past ? "" : `<button class="mbtn danger" id="del">Delete</button><button class="mbtn" id="edit">Edit</button>`}
+        <button class="mbtn pink" id="clone">Clone</button>
+      </div>`);
+    modal.querySelector("#back").addEventListener("click", () => openDay(k, past));
+    modal.querySelector("#del")?.addEventListener("click", () => {
+      events[k] = events[k].filter(e => e.id !== id);
+      if (!events[k].length) { delete events[k]; close(); } else openDay(k, past);
+    });
+    modal.querySelector("#edit")?.addEventListener("click", () => openForm({ dateKey: k, ev }));
+    modal.querySelector("#clone").addEventListener("click", () => openForm({ dateKey: k, ev, clone: true }));
+  }
+
+  function openForm({ dateKey, ev, clone }) {
+    const editing = ev && !clone;
+    const label = clone ? "Clone event" : editing ? "Edit event" : "New event";
+    show(`
+      <header>${clone ? `<h2>${label}<small>from ${dateKey}</small></h2>` : heading(dateKey)}<button class="x" aria-label="Close">×</button></header>
+      ${clone ? "" : `<p class="note" style="margin-top:-6px">${label}</p>`}
+      ${clone ? `<label for="f-date">Date</label><input type="date" id="f-date" min="${todayKey}" value="${dateKey < todayKey ? todayKey : dateKey}">` : ""}
+      <label for="f-title">Title</label>
+      <input type="text" id="f-title" maxlength="60" value="${ev ? esc(ev.title) : ""}" placeholder="e.g. Dentist">
+      <div class="counter"><span id="c-title">0</span>/60</div>
+      <label for="f-desc">Description <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
+      <textarea id="f-desc" maxlength="500">${ev ? esc(ev.description) : ""}</textarea>
+      <div class="counter"><span id="c-desc">0</span>/500</div>
+      <div class="actions" style="margin-top:14px">
+        <button class="mbtn" id="cancel">Cancel</button>
+        <button class="mbtn pink" id="save">Save</button>
+      </div>`);
+    const t = modal.querySelector("#f-title"), ds = modal.querySelector("#f-desc"), save = modal.querySelector("#save");
+    const sync = () => {
+      modal.querySelector("#c-title").textContent = t.value.length;
+      modal.querySelector("#c-desc").textContent = ds.value.length;
+      save.disabled = !t.value.trim();
+    };
+    t.addEventListener("input", sync); ds.addEventListener("input", sync); sync(); t.focus();
+    modal.querySelector("#cancel").addEventListener("click", close);
+    save.addEventListener("click", () => {
+      const title = t.value.trim(), description = ds.value.trim();
+      if (editing) { ev.title = title; ev.description = description; }
+      else {
+        const target = clone ? modal.querySelector("#f-date").value : dateKey;
+        if (!target || target < todayKey) return;
+        add(target, title, description);
+      }
+      close();
+    });
+  }
+
+  // ---- bar ----
+  document.getElementById("prev").onclick = () => { start = new Date(start.getFullYear(), start.getMonth() - 1, 1); render(); };
+  document.getElementById("next").onclick = () => { start = new Date(start.getFullYear(), start.getMonth() + 1, 1); render(); };
+  document.getElementById("today").onclick = () => { start = new Date(today.getFullYear(), today.getMonth(), 1); render(); };
+  document.getElementById("export").onclick = () => console.log("[mockup] export: not wired");
+  document.getElementById("import").onclick = () => console.log("[mockup] import: not wired");
+
+  render();
+</script>
+</body>
+</html>
