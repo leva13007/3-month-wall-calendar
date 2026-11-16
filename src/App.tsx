@@ -1,9 +1,15 @@
+import { toDateKey, yearMonthOf } from './lib/dates'
+import CalendarView from './components/CalendarView'
+
+// T3: today is read once on load; T5 (useToday) updates it at midnight.
+// T4 adds the top bar and navigation.
+const today = toDateKey(new Date())
+
 function App() {
   return (
-    <main className="placeholder">
-      <h1>NOVEMBER <small>листопад</small></h1>
-      <p>Wall Calendar — scaffold. The calendar comes in T3.</p>
-    </main>
+    <div className="app">
+      <CalendarView viewStart={yearMonthOf(today)} today={today} />
+    </div>
   )
 }
 

@@ -1,0 +1,141 @@
+/* ---------- page area ---------- */
+.calendar {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  padding: var(--gap) var(--side-padding);
+}
+
+/* ---------- month ---------- */
+.month {
+  flex-shrink: 1;
+  flex-basis: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(28px, 6%) repeat(7, 1fr);
+  background: var(--paper);
+  border-radius: var(--month-radius);
+  overflow: hidden;
+}
+
+/* rows are only a grouping in JSX; their cells sit directly in the month grid */
+.month__row {
+  display: contents;
+}
+
+.month__head {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.25em 0.6em 0;
+  font-family: var(--font-display);
+}
+
+.month__name {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(18px, 2.6vh, 44px);
+  letter-spacing: 0.02em;
+}
+
+.month__name small {
+  font-weight: 700;
+  font-size: 0.5em;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.month__name small::before {
+  content: '•';
+  color: var(--red);
+  margin: 0 0.3em;
+}
+
+.month__year {
+  font-weight: 800;
+  color: var(--red);
+  font-size: clamp(18px, 2.6vh, 44px);
+}
+
+/* weekday + week header labels */
+.month__label {
+  background: var(--weekday-bar);
+  text-align: center;
+  padding: 0.25em 0;
+  font-family: var(--font-display);
+  line-height: 1.05;
+}
+
+.month__label b {
+  display: block;
+  font-size: clamp(12px, 1.35vh, 22px);
+}
+
+.month__label span {
+  display: block;
+  font-size: clamp(8px, 0.85vh, 13px);
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.month__label--week {
+  color: var(--muted);
+}
+
+.month__label--week b {
+  font-size: clamp(10px, 1.1vh, 18px);
+}
+
+.month__label--weekend b {
+  color: var(--red);
+}
+
+.month__week {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: #b4b4ba;
+  font-size: clamp(12px, 1.6vh, 26px);
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- day cell ---------- */
+.day {
+  position: relative;
+  min-height: 0;
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0 0.35em 0.1em 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 3.6vh, 64px);
+  line-height: 1;
+  background: var(--bg);
+}
+
+.day--weekend {
+  color: var(--red);
+}
+
+/* overflow days: outlined numbers, display-only (US-1.2) */
+.day--overflow {
+  color: transparent;
+  -webkit-text-stroke: 1px #c3c3c8;
+  background: var(--paper);
+}
+
+.day--past {
+  opacity: var(--past-opacity);
+}
+
+.day--today {
+  box-shadow: inset 0 0 0 var(--today-border) var(--red);
+}
