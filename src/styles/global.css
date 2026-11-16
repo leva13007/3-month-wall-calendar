@@ -18,18 +18,8 @@ body {
   overflow: hidden;
 }
 
-/* temporary, removed in T3 */
-.placeholder {
-  padding: 24px;
-}
-.placeholder h1 {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 48px;
-  margin: 0 0 8px;
-}
-.placeholder small {
-  font-size: 0.5em;
-  color: var(--muted);
-  font-weight: 700;
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
