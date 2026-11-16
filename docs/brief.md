@@ -14,7 +14,7 @@ Glossary:
   View — 3 months on screen: start month + next 2. "Today" resets the start month to the current month.
   Today — current date in the machine's local time; highlighted.
   Week number — ISO 8601 week, weeks start on Monday (e.g. 28–31 Dec 2026 = week 53).
-  Month grid — 5 or 6 week rows, as many as the month needs (no shared cells like "23/30").
+  Month grid — 4 to 6 week rows, as many as the month needs (no shared cells like "23/30").
   Overflow days — days from the previous/next month that fill the first and last rows; faded and display-only in v1.
   Day modal — opens on click of an in-month day. With events: list + "Add event"; click an event → details (edit / delete). No events: opens the add form directly.
   Backup — export of all events to a JSON file, and import from it.
