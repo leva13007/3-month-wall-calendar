@@ -165,9 +165,15 @@ so it opens in its own window on the vertical monitor.
   named "Wall Calendar", with its own icon.
 
 ### US-6.2 Works offline
-- Given the app was installed once, when the local server is not running
-  (e.g. after a restart), then the app still opens and works with saved events.
+- Given the app was installed once, when there is no network,
+  then the app still opens and works with saved events.
 
 ### US-6.3 Updates
 - Given a new version is built and served, then the app uses it on the next launch.
 - No "update available" message in v1; the old version may show once after a change.
+
+### US-6.4 Public hosting
+As the owner, I share one public link, and anyone can use the calendar.
+- When a PR is merged into `main`, then the new version is deployed to GitHub Pages automatically.
+- Given two people use the same link, then each sees only the events in their own browser.
+- The README says that events live only in the browser and recommends regular export.
