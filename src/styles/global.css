@@ -1,0 +1,35 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  overflow: hidden;
+}
+
+/* temporary, removed in T3 */
+.placeholder {
+  padding: 24px;
+}
+.placeholder h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 48px;
+  margin: 0 0 8px;
+}
+.placeholder small {
+  font-size: 0.5em;
+  color: var(--muted);
+  font-weight: 700;
+}

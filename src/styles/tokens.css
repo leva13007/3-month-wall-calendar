@@ -1,0 +1,30 @@
+/* Design tokens — values from docs/design/mockup.html */
+:root {
+  /* colors */
+  --bg: #ffffff;
+  --paper: #f6f6f7;
+  --line: #e3e3e6;
+  --ink: #1c1c1f;
+  --muted: #8a8a92;
+  --weekday-bar: #e9e9ec;
+  --red: #d62828;
+  --pink: #ff3d8b;
+  --pink-soft: #ffe3ef;
+  --bar: #1c1c1f;
+  --bar-ink: #f4f4f5;
+
+  /* fonts */
+  --font-display: 'Barlow Condensed', 'Inter', system-ui, sans-serif;
+  --font-ui: 'Inter', system-ui, sans-serif;
+
+  /* shapes */
+  --month-radius: 4px;
+  --event-border: 1.5px;
+  --today-border: 4px;
+  --past-opacity: 0.35;
+
+  /* layout */
+  --bar-height: clamp(44px, 4.2vh, 72px);
+  --gap: clamp(6px, 1vh, 18px);
+  --side-padding: clamp(8px, 1.4vw, 24px);
+}

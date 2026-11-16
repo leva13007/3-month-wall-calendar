@@ -1,2 +1,19 @@
+# Personal
 english_log/
 .DS_Store
+
+# Dependencies and build output
+node_modules
+dist
+dist-ssr
+*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Editors
+.vscode/*
+!.vscode/extensions.json
+.idea
