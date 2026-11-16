@@ -9,8 +9,9 @@ Technical plan for the v1 spec. Inputs: [brief](brief.md), [spec](spec.md),
 - **Vitest** (dev-only) for pure logic and the storage module. Spec examples become test cases.
 - **PWA by hand:** `manifest.webmanifest` + a small service worker. No `vite-plugin-pwa`.
 - No other runtime libraries. No state library, no date library, no UI kit.
-- Run locally: `npm run build && npm run preview` (localhost counts as a secure context,
-  so Chrome allows PWA install). Dev: `npm run dev`. Tests: `npm test`.
+- Hosting: **GitHub Pages**, deployed by a GitHub Actions workflow on every push to `main`
+  (`.github/workflows/deploy.yml`: install → test → build → deploy `dist/`).
+- Dev: `npm run dev`. Tests: `npm test`. Local production check: `npm run build && npm run preview`.
 
 ## Project structure
 
@@ -135,6 +136,7 @@ miss the timer. When the day changes:
 | `eventStorage` | US-4.1, 4.2, 4.3 |
 | `backup`, `validation` | US-5.1, 5.2, 5.3 |
 | `sw.js`, manifest | US-6.1, 6.2, 6.3 |
+| `deploy.yml`, `base` | US-6.4 |
 
 ## Key logic
 
@@ -156,6 +158,13 @@ miss the timer. When the day changes:
   `height: 100vh; overflow: hidden` → no scrollbars at any window size (US-1.6).
 - English first, Ukrainian second (US-1.1).
 - Fonts self-hosted in `public/fonts/` — the mockup's Google Fonts link would break offline.
+
+## GitHub Pages base path
+
+The app is served from `https://<user>.github.io/3-month-wall-calendar/`, not from `/`.
+- `vite.config.ts`: `base: "/3-month-wall-calendar/"`.
+- Manifest `start_url` and `scope`, service worker registration and its cache keys
+  use relative paths or `import.meta.env.BASE_URL` — never a hard-coded `/`.
 
 ## PWA
 
