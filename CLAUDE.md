@@ -13,6 +13,8 @@ Keep the solution simple — no extra libraries unless clearly justified.
 - `npm test` — Vitest once; `npm run test:watch` — watch mode;
   one file: `npx vitest run src/lib/dates.test.ts`; one test: add `-t "week 53"`
 - `npm run build` — type-check (`tsc -b`) + production build; `npm run preview` — serve `dist/`
+- App is served under `/3-month-wall-calendar/` (Vite `base`), also in dev — never hard-code `/` in asset URLs
+- CI/CD: `.github/workflows/deploy.yml` — PRs run lint/test/build; pushes to `main` also deploy to GitHub Pages
 - `npm run lint` — oxlint
 
 Architecture, data model and file layout: see `docs/plan.md`. Task list: `docs/tasks.md`.
