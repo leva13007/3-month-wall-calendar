@@ -14,8 +14,9 @@ so I know what is coming in the next 3 months.
 - Each month has a weekday row, Monday first, English first: "MON / ПН" … "SUN / НД".
 
 ### US-1.2 Month grid
-- A month shows 5 or 6 week rows, as many as it needs. No shared cells.
+- A month shows 4 to 6 week rows, as many as it needs. No shared cells.
 - Given November 2026, then the grid has 6 rows: 26 Oct – 6 Dec.
+- Given February 2027 (starts on Monday, 28 days), then the grid has 4 rows.
 - Overflow days (other months) look outlined/faded. They are display-only:
   clicking them does nothing.
 

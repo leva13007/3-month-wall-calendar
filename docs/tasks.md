@@ -9,8 +9,8 @@ Status: `todo` · `doing` · `done`
 | # | Task | Branch | Stories | Status |
 |---|---|---|---|---|
 | T1 | Scaffold | `chore/scaffold` | — | done |
-| T1b | Deploy to GitHub Pages | `chore/deploy` | 6.4 | doing |
-| T2 | Date logic | `feat/dates` | 1.2, 1.3 | todo |
+| T1b | Deploy to GitHub Pages | `chore/deploy` | 6.4 | done |
+| T2 | Date logic | `feat/dates` | 1.2, 1.3 | doing |
 | T3 | Static calendar view | `feat/calendar-view` | 1.1–1.4, 1.6 | todo |
 | T4 | Navigation | `feat/navigation` | 2.1–2.3 | todo |
 | T5 | Day change at midnight | `feat/use-today` | 1.7 | todo |
@@ -49,7 +49,7 @@ and a failing test stops the deploy.
 ### T2 — Date logic (`lib/dates.ts`)
 - `toDateKey`, `parseDateKey`, `addMonths`, `isoWeek`, `monthGrid`.
 - Unit tests from the spec:
-  - Nov 2026 → 6 rows, 26 Oct – 6 Dec; Jan 2027 → 5 rows.
+  - Nov 2026 → 6 rows, 26 Oct – 6 Dec; Jan 2027 → 5 rows; Feb 2027 → 4 rows.
   - 28 Dec 2026 → week 53; 1 Jan 2027 → week 53; 4 Jan 2027 → week 1.
   - `addMonths` across a year boundary (Dec 2026 + 1 → Jan 2027).
 

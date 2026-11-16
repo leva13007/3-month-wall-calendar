@@ -140,7 +140,7 @@ miss the timer. When the day changes:
 
 ## Key logic
 
-- `monthGrid(year, month)` → rows of 7 date keys starting on Monday; 5 or 6 rows;
+- `monthGrid(year, month)` → rows of 7 date keys starting on Monday; 4–6 rows;
   each cell knows if it is in the month (overflow = display-only, not clickable).
 - `isoWeek(dateKey)` → ISO 8601 week number (Thursday rule).
 - Validation (shared by add / edit / clone / import): title trimmed, 1–60 chars;
