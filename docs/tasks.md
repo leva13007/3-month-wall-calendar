@@ -8,7 +8,7 @@ Status: `todo` · `doing` · `done`
 
 | # | Task | Branch | Stories | Status |
 |---|---|---|---|---|
-| T1 | Scaffold | `chore/scaffold` | — | todo |
+| T1 | Scaffold | `chore/scaffold` | — | done |
 | T1b | Deploy to GitHub Pages | `chore/deploy` | 6.4 | todo |
 | T2 | Date logic | `feat/dates` | 1.2, 1.3 | todo |
 | T3 | Static calendar view | `feat/calendar-view` | 1.1–1.4, 1.6 | todo |

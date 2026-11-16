@@ -8,6 +8,15 @@ Scope, glossary, constraints and deadline: see `docs/brief.md` (single source of
 If I ask for something out of scope, remind me and ask if I really want to expand scope.
 Keep the solution simple — no extra libraries unless clearly justified.
 
+## Commands
+- `npm run dev` — dev server
+- `npm test` — Vitest once; `npm run test:watch` — watch mode;
+  one file: `npx vitest run src/lib/dates.test.ts`; one test: add `-t "week 53"`
+- `npm run build` — type-check (`tsc -b`) + production build; `npm run preview` — serve `dist/`
+- `npm run lint` — oxlint
+
+Architecture, data model and file layout: see `docs/plan.md`. Task list: `docs/tasks.md`.
+
 ## English practice — IMPORTANT
 This project is also my English practice. I'm Ukrainian, English level B1→B2.
 
