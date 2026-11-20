@@ -11,8 +11,8 @@ Status: `todo` · `doing` · `done`
 | T1 | Scaffold | `chore/scaffold` | — | done |
 | T1b | Deploy to GitHub Pages | `chore/deploy` | 6.4 | done |
 | T2 | Date logic | `feat/dates` | 1.2, 1.3 | done |
-| T3 | Static calendar view | `feat/calendar-view` | 1.1–1.4, 1.6 | doing |
-| T4 | Navigation | `feat/navigation` | 2.1–2.3 | todo |
+| T3 | Static calendar view | `feat/calendar-view` | 1.1–1.4, 1.6 | done |
+| T4 | Navigation | `feat/navigation` | 2.1–2.3 | doing |
 | T5 | Day change at midnight | `feat/use-today` | 1.7 | todo |
 | T6 | Storage module | `feat/storage` | 4.1–4.3 | todo |
 | T7 | Validation | `feat/validation` | 3.2, 3.6, 5.3 | todo |
