@@ -1,0 +1,67 @@
+.topbar {
+  flex: 0 0 auto;
+  height: var(--bar-height);
+  background: var(--bar);
+  color: var(--bar-ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 var(--side-padding);
+}
+
+.topbar__group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.topbar__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: clamp(14px, 1.6vh, 24px);
+  opacity: 0.85;
+}
+
+.topbar__btn {
+  font: 600 clamp(12px, 1.25vh, 18px) var(--font-ui);
+  border: 1px solid rgb(255 255 255 / 25%);
+  background: transparent;
+  color: inherit;
+  border-radius: 8px;
+  padding: 0.45em 0.9em;
+  cursor: pointer;
+}
+
+.topbar__btn:hover:not(:disabled) {
+  background: rgb(255 255 255 / 10%);
+}
+
+.topbar__btn:focus-visible {
+  outline: 2px solid var(--pink);
+  outline-offset: 2px;
+}
+
+.topbar__btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.topbar__btn--primary {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.topbar__btn--primary:hover:not(:disabled) {
+  background: var(--red);
+  filter: brightness(1.1);
+}
+
+/* the title is the first thing to go on narrow windows */
+@media (max-width: 520px) {
+  .topbar__title {
+    display: none;
+  }
+}
